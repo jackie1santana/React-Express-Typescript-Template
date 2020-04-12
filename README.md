@@ -22,4 +22,8 @@ Node-Sass installed in React
 `yarn add node-sass or  npm install -f node-sass`
 
 if you have node-sass binary issues 
-run `node node_modules/node-sass/scripts/install.js` (manually) in the terminal via client folder
+run `npm run rebuild-node-sass` via `node node_modules/node-sass/scripts/install.js` (manually) in the terminal via client folder
+
+<pre>Kills All Node Processes: `ps aux | awk '/node/{print $2}' | xargs kill -9`</pre>
+
+Install Particle.js for React `npm i react-particles.js`

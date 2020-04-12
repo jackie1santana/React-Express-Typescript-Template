@@ -13,6 +13,7 @@
     "node-sass": "^4.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-particles-js": "^3.0.3",
     "react-scripts": "3.4.1",
     "typescript": "^3.8.3"
   },
@@ -20,7 +21,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "rebuild-node-sass": "node node_modules/node-sass/scripts/install.js"
   },
   "eslintConfig": {
     "extends": "react-app"

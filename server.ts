@@ -1,4 +1,5 @@
 import express, { Application, Request, Response, NextFunction } from 'express'
+const reload = require('reload')
 
 const app: Application = express()
 
@@ -12,3 +13,4 @@ app.listen(PORT, () => {
     console.log(`Server is running on ${PORT}`)
 })
 
+reload(app)

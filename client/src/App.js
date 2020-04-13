@@ -1,16 +1,14 @@
 import React from 'react';
-import winter from './images/pine.jpg';
+import snowflake from './images/snowflake.svg';
 import './App.scss';
 import Particles from 'react-particles-js'
-
+import Home from './components/Home'
 
 
 
 function App() {
-  return (
-    <div className="App">
-    <Particles
-            params={{
+  const particleOptions = {
+    
 	    "particles": {
 	       "number": {
         "value": 100,
@@ -20,22 +18,22 @@ function App() {
         }
       },
       "color": {
-        "value": "#ffffff"
+        "value": "#fff"
       },
       "shape": {
-        "type": "circle",
+        "type": "image",
         "stroke": {
           "width": 0,
           "color": "#000000"
         },
+         "image": {
+            "src": snowflake,
+            "width": 100,
+            "height": 100
+          },
         "polygon": {
-          "nb_sides": 5
+          "nb_sides": 7
         },
-        "image": {
-          "src": "img/github.svg",
-          "width": 100,
-          "height": 100
-        }
       },
       "opacity": {
         "value": 0.8,
@@ -119,8 +117,15 @@ function App() {
       }
     },
      "retina_detect": true 
-	}}
-            />
+	}
+  
+  return (
+    <div>
+      
+        <Particles className="particles"
+              params={particleOptions}
+              ></Particles>
+              <Home />
     </div>
   )
 }

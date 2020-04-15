@@ -1,37 +1,37 @@
-import React,{ useState, useEffect } from 'react'
-import axios from 'axios'
-import './Covid.scss'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./Covid.scss";
 
 export default function Covid() {
-    const [confirmedCase, setConfirmedCase] = useState([])
-    const [recoveredCase, setRecoveredCase] = useState([])
-    const [criticalCase, setCriticalCase] = useState([])
-    const [deathCase, setDeathCase] = useState([])
+  const [globalCases, setGlobalCases] = useState([]);
+
   useEffect(() => {
-    axios.get('http://localhost:2300/globalcases')
-.then(response => {
+    axios.get("http://localhost:2300/globalcases").then((response) => {
+      
+    //Add moment.js
+      const cases = {
+        confirmed: `Global Confirmed Cases: ${response.data[0].confirmed}`,
+        recovered: `Global Recovered Cases: ${response.data[0].recovered}`,
+        critical: `Global Critical Cases: ${response.data[0].critical}`,
+        deaths: `Global Deaths: ${response.data[0].deaths}`
+      };
+
+      setGlobalCases(cases);
+    
+    });
+    
+  }, []);
+
+  console.log(globalCases)
   
-    const confirmed = response.data[0].confirmed
-    const recovered= response.data[0].recovered
-    const critical = response.data[0].critical
-    const deaths = response.data[0].deaths
-    const allCases =  response.data
-  
-    setConfirmedCase(confirmed)
-    setRecoveredCase(recovered)
-    setCriticalCase(critical)
-    setDeathCase(deaths)
-  console.log(allCases)
-})
-  })
-    return (
-        <div>
-        <ul><li>Global Confirmed Cases: {[confirmedCase]}</li>
-        <li>Global Recovered Cases: {[recoveredCase]}</li>
-        <li>Global Critical Cases: {[criticalCase]}</li>
-        <li>Global Death Cases: {[deathCase]}</li>
-        </ul>
-            
-        </div>
-    )
+  return (
+    <div>
+      <ul>
+        <li>{globalCases.confirmed}</li>
+        <li>{globalCases.recovered}</li>
+        <li>{globalCases.critical}</li>
+        <li>{globalCases.deaths}</li>
+      </ul>
+    </div>
+  );
 }

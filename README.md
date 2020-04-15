@@ -27,3 +27,9 @@ run `npm run rebuild-node-sass` via `node node_modules/node-sass/scripts/install
 <pre>Kills All Node Processes: `ps aux | awk '/node/{print $2}' | xargs kill -9`</pre>
 
 Install Particle.js for React `npm i react-particles.js`
+
+to start database development ` brew services start mongodb-community@3.6 `
+
+to restart database development ` brew services restart mongodb-community@3.6 `
+
+to stop database development ` brew services stop mongodb-community@3.6 `

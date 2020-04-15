@@ -2,13 +2,15 @@ const express = require('express')
 const reload = require('reload')
 const axios = require('axios')
 const cors = require('cors')
-
+require('./database/mongodb.js')
 const app = express()
 
 const PORT = process.env.PORT || 2300
 
 app.use(cors())
 
+//separate routers 
+//add countrycases data
 
 app.get('/globalcases', async (req, res) => {
   await axios({

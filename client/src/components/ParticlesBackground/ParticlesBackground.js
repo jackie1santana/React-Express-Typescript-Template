@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import snowflake from '../../images/snowflake.svg';
 import './Particles.scss';
 import Particles from 'react-particles-js'

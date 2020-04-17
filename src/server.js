@@ -9,9 +9,11 @@ const PORT = process.env.PORT || 2300
 
 app.use(cors())
 
-//separate routers 
+//add mongoose in here (require it)
+//add in separate routers (require it)
 //add countrycases data
-
+//add in postman
+//set up environment variables
 app.get('/globalcases', async (req, res) => {
   await axios({
     "method":"GET",

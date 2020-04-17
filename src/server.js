@@ -16,6 +16,9 @@ app.use(cors())
 //set up environment variables
 //merge mongoose and mongodb together, or should i put them in separate files
 
+app.get('/', (req, res) => {
+  res.send('Hello Express')
+})
 app.get('/globalcases', async (req, res) => {
   await axios({
     "method":"GET",

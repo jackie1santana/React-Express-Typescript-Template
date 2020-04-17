@@ -21,7 +21,7 @@ app.use(cors())
 //set up environment variables
 //merge mongoose and mongodb together, or should i put them in separate files
 
-app.get('/', (req, res) => {
+app.get('', (req, res) => {
   res.send('express')
 })
 

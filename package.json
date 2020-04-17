@@ -9,8 +9,7 @@
     "open-server-url": "open http://localhost:2300",
     "dev": "env-cmd -f ./config/dev.env nodemon src/server.js -e js,hbs",
     "client": "cd client && yarn start",
-    "servers": "concurrently \"npm run dev\" \"npm run open-server-url\" \"npm run client\" ",
-    "build": "concurrently \"npm run dev\" "
+    "servers": "concurrently \"npm run dev\" \"npm run open-server-url\" \"npm run client\" "
   },
   "keywords": [],
   "author": "",

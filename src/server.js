@@ -7,8 +7,7 @@ const path = require('path')
 const app = express()
 
 
-const publicDirectoryPath = path.join(__dirname, '../client/build')
-app.use(express.static(publicDirectoryPath))
+
 
 const port = process.env.PORT
 
@@ -20,9 +19,13 @@ app.use(cors())
 //add in postman for dev and prod
 //set up environment variables
 //merge mongoose and mongodb together, or should i put them in separate files
+//res.status
+
+const publicDirectoryPath = path.join(__dirname, '../client/build')
+app.use(express.static(publicDirectoryPath))
 
 app.get('', (req, res) => {
-  res.send('express')
+  res.sendFile(publicDirectoryPath)
 })
 
 app.get('/globalcases', async (req, res) => {

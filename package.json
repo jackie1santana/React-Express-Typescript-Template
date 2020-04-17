@@ -2,10 +2,10 @@
   "name": "React-Express-Ts",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/server.js",
+  "main": "server.js",
   "scripts": {
     "test": "",
-    "start": "env-cmd -f ./config/dev.env node src/server.js",
+    "start": "node src/server.js",
     "open-server-url": "open http://localhost:2300",
     "dev": "env-cmd -f ./config/dev.env nodemon src/server.js -e js,hbs",
     "client": "cd client && yarn start",

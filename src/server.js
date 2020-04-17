@@ -3,7 +3,12 @@ const reload = require('reload')
 const axios = require('axios')
 const cors = require('cors')
 require('./database/mongoose.js')
+const path = require('path')
 const app = express()
+
+
+const publicDirectoryPath = path.join(__dirname, '../client/build')
+app.use(express.static(publicDirectoryPath))
 
 const port = process.env.PORT
 
@@ -16,9 +21,7 @@ app.use(cors())
 //set up environment variables
 //merge mongoose and mongodb together, or should i put them in separate files
 
-app.get('/', (req, res) => {
-  res.send('Hello Express')
-})
+
 app.get('/globalcases', async (req, res) => {
   await axios({
     "method":"GET",

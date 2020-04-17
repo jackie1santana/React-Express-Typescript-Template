@@ -17,10 +17,13 @@ app.use(cors())
 //add mongoose in here (require it)
 //add in separate routers (require it)
 //add countrycases data
-//add in postman
+//add in postman for dev and prod
 //set up environment variables
 //merge mongoose and mongodb together, or should i put them in separate files
 
+app.get('/', (req, res) => {
+  res.send('express')
+})
 
 app.get('/globalcases', async (req, res) => {
   await axios({

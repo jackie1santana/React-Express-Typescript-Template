@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://localhost:27017/weatherData', { useNewUrlParser:true, 
+mongoose.connect(process.env.CONNECTION, { useNewUrlParser:true, 
 useUnifiedTopology: true,
 useCreateIndex: true 
 })
@@ -15,14 +15,15 @@ const Covid = mongoose.model('Covid', {
 })
 
 const globalCases = new Covid({
-    confirmedCases: '123',
+    confirmedCases: '40000',
     recovered: '23'
 })
 
-Covid.deleteOne({ confirmedCases: '123'})
-.then(() => {
+globalCases.save(globalCases).then(() => {
     console.log(globalCases)
 }).catch((error) => {
     console.log('Error', error)
 })
+
+Covid.findByIdAndDelete('5e9918b16418f436568965c9')
 

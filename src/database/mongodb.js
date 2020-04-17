@@ -9,7 +9,7 @@ const axios = require('axios')
 
 
 
-const connectionUrl = 'mongodb://localhost:27017';
+const connectionUrl = process.env.CONNECTION;
 
 // Database Name
 const database = 'weatherData'

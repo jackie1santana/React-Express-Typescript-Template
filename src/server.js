@@ -2,10 +2,10 @@ const express = require('express')
 const reload = require('reload')
 const axios = require('axios')
 const cors = require('cors')
-require('./database/mongodb.js')
+require('./database/mongoose.js')
 const app = express()
 
-const PORT = process.env.PORT || 2300
+const port = process.env.PORT
 
 app.use(cors())
 
@@ -14,6 +14,8 @@ app.use(cors())
 //add countrycases data
 //add in postman
 //set up environment variables
+//merge mongoose and mongodb together, or should i put them in separate files
+
 app.get('/globalcases', async (req, res) => {
   await axios({
     "method":"GET",
@@ -100,8 +102,8 @@ app.get('/geocode', async (req, res) => {
   await res.send('geocode')
 })
 
-app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`)
+app.listen(port, () => {
+    console.log(`Server is running on ${port}`)
 })
 
 

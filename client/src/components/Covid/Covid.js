@@ -6,7 +6,7 @@ export default function Covid() {
   const [globalCases, setGlobalCases] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:2300/globalcases").then((response) => {
+    axios.get("/globalcases").then((response) => {
       
     //Add moment.js
       const cases = {

@@ -15,7 +15,7 @@ const Covid = mongoose.model('Covid', {
 })
 
 const globalCases = new Covid({
-    confirmedCases: '40000',
+    confirmedCases: '2300',
     recovered: '23'
 })
 
@@ -25,5 +25,5 @@ globalCases.save(globalCases).then(() => {
     console.log('Error', error)
 })
 
-Covid.findByIdAndDelete('5e9918b16418f436568965c9')
+module.exports = Covid
 

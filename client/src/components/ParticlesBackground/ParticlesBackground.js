@@ -120,7 +120,7 @@ function ParticlesBackground() {
   
   return (
     <div>
-        <Particles id="particles-js"
+        <Particles className="particles"
               params={particleOptions}
               />
    

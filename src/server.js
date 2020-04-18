@@ -29,7 +29,7 @@ app.get('', (req, res) => {
 })
 
 app.get('/globalcases', async (req, res) => {
-  
+
   await axios({
     "method":"GET",
     "url":"https://covid-19-data.p.rapidapi.com/totals",
@@ -50,20 +50,21 @@ app.get('/globalcases', async (req, res) => {
       console.log(error)
     })
 
-   if(req.url == '/globalcases') {
-    const globalCases = Covid
-    globalCases.save(globalCases).then(() => {
+    const globalCases = new Covid(req.body)
+    await globalCases.save(globalCases).then(() => {
       console.log(globalCases)
   }).catch((error) => {
       console.log('Error', error)
   })
-   }
+  
+   
     
 })
 
 
 app.get('/globalcases/:id', async (req, res) => {
-  console.log(req.params.id)
+  
+  
   await axios({
     "method":"GET",
     "url":"https://covid-19-data.p.rapidapi.com/totals",

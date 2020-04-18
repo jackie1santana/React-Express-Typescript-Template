@@ -101,343 +101,38 @@ brew services start mongo-community anymore.
 remember `mongod --dbpath ~/data/db` is basically -> `mongod` command now.. The Mac OS Catalina Update created root permission problems, that is why `mongod` command alone never worked before.
 
 Hope this helped you. Goodluck.
-
-set up mongodb or mongodb w/mongoose in your vscode
-npm install mongodb mongoose --save --save-exact
-add node js driver to your app for a template set up or to view db commands
-
-also add in mongoose to add validation and authentication
-
-https://docs.mongodb.com/drivers/node
-
-or
-
-https://mongodb.github.io/node-mongodb-native/3.6/api/
-
-for cheat sheet
-
-https://gist.github.com/bradtraversy/f407d642bdc3b31681bc7e56d95485b6
-
-mongoose docs
-https://mongoosejs.com/
-
-How to connect your connection and database and insert something
-
-const mongodb = require('mongodb')
-const mongoose = require('mongoose')
-const mongooseValidator = require('mongoose-validator')
-const JWT = require('jsonwebtoken')
-const ObjectID = mongodb.ObjectID
-
-
-const MongoClient = mongodb.MongoClient;
-
-
-const id = ObjectID
-
-// Connection url
-
-
-const connectionUrl = 'mongodb://localhost:27017';
-
-
-// Database Name
-const database = 'weatherData'
-
-
-
-// Connect using MongoClient
-
-
-MongoClient.connect(connectionUrl, { useNewUrlParser:true, useUnifiedTopology: true }, (error, client) => {
-    if(error){
-        console.log("Unable to connect to database")
-    }else{
-        console.log('Database connected')
-    }
-
-
-    const db = client.db(database)
-
-
-    db.collection('covidApi').insertOne({
-       id,
-        name: 'Andrew',
-        age: 27
-    })
-})
-
-
-this will send the data to your database
-
-
-if u want a timestamp
-
-const id = new ObjectID
-
-//it needs to be a New object in order for the timestamp to work
-
-console.log(id.getTimestamp()) or add on .getTimestamp().toLocaleTimeString()
-
- IF YOU WANT TO ADD API
-const mongodb = require('mongodb')
-const mongoose = require('mongoose')
-const mongooseValidator = require('mongoose-validator')
-const JWT = require('jsonwebtoken')
-const MongoClient = mongodb.MongoClient;
-const ObjectID = mongodb.ObjectID
+const express = require('express')
+const reload = require('reload')
 const axios = require('axios')
-// Connection url
+const cors = require('cors')
+require('./database/mongoose.js')
+const path = require('path')
+const app = express()
 
 
-const connectionUrl = 'mongodb://localhost:27017';
 
 
-// Database Name
-const database = 'weatherData'
+const port = process.env.PORT
 
+app.use(cors())
 
-const id = ObjectID
+//add mongoose in here (require it)
+//add in separate routers (require it)
+//add countrycases data
+//add in postman for dev and prod
+//set up environment variables
+//merge mongoose and mongodb together, or should i put them in separate files
+//res.status
 
-
-// Connect using MongoClient
-
-
-MongoClient.connect(connectionUrl, { useNewUrlParser:true, useUnifiedTopology: true }, (error, client) => {
-    if(error){
-        console.log("Unable to connect to database")
-    }else{
-        console.log('Database connected')
-    }
-
-
-    const db = client.db(database)
-
-
-     axios({
-        "method":"GET",
-        "url":"https://covid-19-data.p.rapidapi.com/totals",
-        "headers":{
-        "content-type":"application/json",
-        "x-rapidapi-host":"covid-19-data.p.rapidapi.com",
-        "x-rapidapi-key":"a8b09fdfc0mshd6f279d5c7cefd6p11f240jsn27ee495e8d1c"
-        },"params":{
-        "format":"undefined"
-        }
-        })
-        .then((response)=>{
-          const confirmed = response.data[0].confirmed
-          
-          db.collection('covidApi').insertOne({,
-            id,
-            confirmedCases: confirmed
-        })
-
-
-        })
-        .catch((error)=>{
-          console.log(error)
-        })
-
-
-    
-})
-
-
-USING MONGO WITH MONGOOSE
-
-const mongoose = require('mongoose')
-
-
-mongoose.connect('mongodb://localhost:27017/weatherData', { useNewUrlParser:true, 
-useUnifiedTopology: true,
-useCreateIndex: true 
-})
-
-
-const Covid = mongoose.model('Covid', {
-    confirmedCases: {
-        type: String
-    },
-    recoveredCase : {
-        type: String
-    }
-})
-
-
-const globalCases = new Covid({
-    confirmedCases: '123',
-    recovered: '23'
-})
-
-//TO INSERT VALUES
-
-globalCases.save(globalCases).then(() => {
-    console.log(globalCases)
-}).catch((error) => {
-    console.log('Error', error)
-})
-
-
-
-//use the schema name to delete
-Covid.deleteOne({ confirmedCases: '123'})
-.then(() => {
-    console.log(globalCases)
-}).catch((error) => {
-    console.log('Error', error)
-})
-
-
-DEPLOYMENT TO HEROKU & SWITCHING TO MONGODB ATLAS SERVER
-
-DEVELOPMENT
-1st step is to change everything to environment variables
-switch your localhostport  to atlas server port
-env does not get commited to github for secuirty purposes
-so make a config file and make a dev.env
-
-npm i env-cmd --save-dev --save-exact (for env files)
-(this allows the dot.env file to load in the env to my process.env.PORT automatically) when using the DEV script only
-
-"main": "./src/server.js", (this path has to be correct or the env-cmd wont work)
-
- "dev": "env-cmd -f ./config/dev.env nodemon src/server.js -e js,hbs",
-
-Now add in JWT secret, any API key & the mongodb/mongoose connection string
-
-PORT=2300
-CONNECTION=mongodb://localhost:27017/weatherData
-
-now put the dev.env file in .gitignore 
-
-CREATE PRODUCTION FOR MONGODB ATLAS
-the START script process.env.Port runs on heroku not env-cmd
-
-Heroku does NOT automatically set and other env other than the PORT,
-so you have to manually set up it up for mongo url and api keys
-
-create local database (fill in field individually in compass)
-
-once database is connected and ready to deploy
-
-set up env variables for dev (env for port, api keys and database)
-
- go to MONGODB ATLAS 
-
-create new project
-
- Create/build cluster
-
- in network access make sure you white list yur ip 0.0.0.0./0
-
- create database user in database accesss to admin atlas
-
- connect mongodb compass & copy connection string (make atlas database in compass) by creating a new connection and pasting in mongodb+srv://jackie:<password>@weatherdataatlas-injix.mongodb.net/test (make sure its srv record)
-
-deploy to production and run database thru heroku
-
-gitignore node_modules & config
-
-ready for deployment
-
-create github repo & switch to public or private & push up to github with original dev envs
-
-in terminal..after github push is done-> run: heroku create <filename>
-
-set env for heroku: heroku config:set key=value (places in key and value from dev.env)
-
-(if you want to check if u have variables set run: heroku config) (to remove variables run: heroku config:unset key (just key name))
-
-do NOT add PORT to heroku config..it does it automatically. everything else, copy exavtly how it says in dev.env to heroku config
-
-when it comes to copying MONGO URL use the ATLAS STRING instead of localhost for heroku config .. copy the string from [CONNECT TO YOUR APPLICATION] not connect to compass
-edit the string and add in password 
-
-make sure you wrap the mongo atlas string in single or double qutoes
-
-also remove 'test' word from string and replace it with the name of the loccalhost database name
-
-heroku config:set CONNECTION='mongodb+srv://jackie:1234@weatherdataatlas-injix.mongodb.net/weatherData?retryWrites=true&w=majority'
-
-now run: heroku config (to check status)
-
-now push code up to heroku server: git push heroku master
-
-(dont put anything in package.json that says 'build': ex->  "build": "concurrently \"npm run dev\" ") 
-
-now copy the heroku url from terminal input
-
-change api urls & set a proxy in client ex:  },
-  "proxy": "http://localhost:2300"
-} in client package.json
-
-(IF U HAVE A REACT APP)
-remove unregister.serviceworker() from index.js in react
-
-ADD THIS IN EXPRESS server.js
-
-cosnt path = require('path')
 const publicDirectoryPath = path.join(__dirname, '../client/build')
 app.use(express.static(publicDirectoryPath))
-
 
 app.get('', (req, res) => {
   res.sendFile(publicDirectoryPath)
 })
 
- add this in express package.json "start": "node src/server.js",
-    "heroku-postbuild": "cd client && npm install && npm run build",
-	
-in terminal
-git add .
-git commit -m " "
-git push -u origin master
-git push heroku master
-
-
-PASS IN MONGOOSE MODELS INTO SERVER.JS AND SAVE INSERS TO DATABASE VIA APP.GET()
-mongoose
-const mongoose = require('mongoose')
-
-
-mongoose.connect(process.env.CONNECTION, { useNewUrlParser:true, 
-useUnifiedTopology: true,
-useCreateIndex: true 
-})
-
-
-const Covid = mongoose.model('Covid', {
-    confirmedCases: {
-        type: String
-    },
-    recoveredCase : {
-        type: String
-    }
-})
-
-
-const globalCases = new Covid({
-    confirmedCases: '2300',
-    recovered: '23'
-})
-
-
-globalCases.save(globalCases).then(() => {
-    console.log(globalCases)
-}).catch((error) => {
-    console.log('Error', error)
-})
-
-
-module.exports = Covid
-
-server.js
-
-require('./database/mongoose.js')
-
 app.get('/globalcases', async (req, res) => {
-  
+
   await axios({
     "method":"GET",
     "url":"https://covid-19-data.p.rapidapi.com/totals",
@@ -458,21 +153,88 @@ app.get('/globalcases', async (req, res) => {
       console.log(error)
     })
 
-
-   if(req.url == '/globalcases') {
-    const globalCases = Covid
-    globalCases.save(globalCases).then(() => {
+    // const globalCases = new Covid
+    const globalCases = new Covid(req.body)
+    await globalCases.save(globalCases).then(() => {
       console.log(globalCases)
   }).catch((error) => {
       console.log('Error', error)
   })
-   }
+  
+   
     
+})
+
+
+app.get('/globalcases/:id', async (req, res) => {
+  
+  
+  await axios({
+    "method":"GET",
+    "url":"https://covid-19-data.p.rapidapi.com/totals",
+    "headers":{
+    "content-type":"application/json",
+    "x-rapidapi-host":"covid-19-data.p.rapidapi.com",
+    "x-rapidapi-key":"a8b09fdfc0mshd6f279d5c7cefd6p11f240jsn27ee495e8d1c"
+    },"params":{
+    "format":"undefined"
+    }
+    })
+    .then((response)=>{
+      const cases = { 
+        confirmed: response.data[0].confirmed,
+        recovered: response.data[0].recovered,
+        critical: response.data[0].critical,
+        deaths: response.data[0].deaths,
+        allCases: response.data
+      }
+      
+      if(req.params.id == 'confirmed') {
+        res.json(cases.confirmed)
+
+      }else if (req.params.id == 'recovered') {
+        res.json(cases.recovered)
+
+      }else if (req.params.id == 'critical') {
+        res.json(cases.critical)
+
+      }else if (req.params.id == 'deaths') {
+        res.json(cases.deaths)
+
+      }else {
+        res.json(cases.allCases)
+      }
+       
+    })
+    .catch((error)=>{
+      console.log(error)
+    })
+
+    
+   
+})
+
+app.get('/casesbycountry', async (req, res) => {
+  await res.send('weather')
+})
+
+app.get('/casesbycountry/:id', async (req, res) => {
+  await res.send('weather')
+})
+
+app.get('/weatherData', async (req, res) => {
+    await res.send('weather')
+})
+
+app.get('/geocode', async (req, res) => {
+  await res.send('geocode')
+})
+
+app.listen(port, () => {
+    console.log(`Server is running on ${port}`)
 })
 
 
 
 
-
-
-
+reload(app)
